@@ -28,6 +28,11 @@ async function updatePractica(id_practica, newData) {
 async function deletePractica(id_practica) {
   return Practica.destroy({ where: { id_practica } });
 }
+// Listar prácticas por emoción
+async function listPracticasPorEmocion(emocion) {
+  return Practica.findAll({ where: { emocion } });
+}
+
 
 module.exports = {
   getPractica,
@@ -35,6 +40,7 @@ module.exports = {
   createPractica,
   updatePractica,
   deletePractica,
-  listPracticas
+  listPracticas,
+  listPracticasPorEmocion
 
 };

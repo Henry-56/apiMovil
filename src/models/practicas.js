@@ -36,6 +36,10 @@ const Practica = sequelize.define("practicas", {
     type: Sequelize.TEXT,
     allowNull: true
   },
+  emocion: { // <-- CAMPO PARA FILTRAR POR EMOCIÓN
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: true
@@ -45,6 +49,7 @@ const Practica = sequelize.define("practicas", {
     allowNull: true
   }
 });
+
 
 Practica.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 

@@ -66,4 +66,16 @@ router.delete('/practica/:id', async (req, res) => {
   }
 });
 
+// Listar prácticas por emoción
+router.get('/practicas/emocion/:emocion', async (req, res) => {
+  try {
+    const lista = await practicaController.listPracticasPorEmocion(req.params.emocion);
+    res.status(200).json(lista);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error al filtrar por emoción' });
+  }
+});
+
+
 module.exports = router;
