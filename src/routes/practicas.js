@@ -16,7 +16,7 @@ router.get('/practicas/:id_usuario', async (req, res) => {
 //listar todas las prácticas
 router.get('/practicas', async (req, res) => {
   try {
-    const practicas = await listPracticas();
+    const practicas = await practicaController.listPracticas();
     res.json(practicas);
   } catch (err) {
     res.status(500).json({ error: 'Error al listar las prácticas' });
