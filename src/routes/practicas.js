@@ -13,7 +13,15 @@ router.get('/practicas/:id_usuario', async (req, res) => {
     res.status(500).json({ message: 'Error del servidor' });
   }
 });
-
+//listar todas las prácticas
+router.get('/practicas', async (req, res) => {
+  try {
+    const practicas = await listPracticas();
+    res.json(practicas);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al listar las prácticas' });
+  }
+});
 // Obtener una práctica
 router.get('/practica/:id', async (req, res) => {
   try {

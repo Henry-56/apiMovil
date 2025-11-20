@@ -10,6 +10,9 @@ async function listPracticasPorUsuario(id_usuario) {
   return Practica.findAll({ where: { id_usuario } });
 }
 
+async function listPracticas() {
+  return Practica.findAll();
+}
 // Crear nueva práctica
 async function createPractica(data) {
   return Practica.create(data); // data debe contener los campos requeridos
@@ -31,5 +34,7 @@ module.exports = {
   listPracticasPorUsuario,
   createPractica,
   updatePractica,
-  deletePractica
+  deletePractica,
+  listPracticas
+
 };
