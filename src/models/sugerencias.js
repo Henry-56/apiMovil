@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/config');
-const { Usuario } = require('./usuarios');
 
 const Sugerencia = sequelize.define("sugerencias", {
   id_sugerencia: {
@@ -12,13 +11,33 @@ const Sugerencia = sequelize.define("sugerencias", {
     type: Sequelize.INTEGER,
     allowNull: false
   },
+  id_emocion_relacionada: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  id_practica_relacionada: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
   sugerencia: {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  tipo: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  origen: {
+    type: Sequelize.STRING, // 'sistema', 'manual'
+    defaultValue: 'sistema'
+  },
+  leida: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   fecha: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
   },
   createdAt: {
     type: Sequelize.DATE,
@@ -29,8 +48,6 @@ const Sugerencia = sequelize.define("sugerencias", {
     allowNull: true
   }
 });
-
-Sugerencia.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 Sugerencia.sync()
   .then(() => console.log("Sugerencia model initialized"))

@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/config');
-const { Usuario } = require('./usuarios');
 
 const Practica = sequelize.define("practicas", {
   id_practica: {
@@ -10,10 +9,13 @@ const Practica = sequelize.define("practicas", {
   },
   id_usuario: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true // Can be null if it's a library practice, or specific to user? Requirement says "catalogo de practicas" so maybe no user_id for library items? But "sessions" have user_id.
+    // Requirement: "Practica Campos: id_practica, id_usuario, tipo..."
+    // If it's a library practice, maybe id_usuario is null or admin?
+    // Let's keep it as per requirement.
   },
   tipo: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING, // 'video', 'audio', 'lectura'
     allowNull: false
   },
   descripcion: {
@@ -24,9 +26,10 @@ const Practica = sequelize.define("practicas", {
     type: Sequelize.STRING,
     allowNull: true
   },
+  // Fields for a "session" (performed practice)
   fecha: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
+    type: Sequelize.DATE,
+    allowNull: true
   },
   duracion_min: {
     type: Sequelize.INTEGER,
@@ -36,9 +39,21 @@ const Practica = sequelize.define("practicas", {
     type: Sequelize.TEXT,
     allowNull: true
   },
-  emocion: { // <-- CAMPO PARA FILTRAR POR EMOCIÓN
-    type: Sequelize.STRING,
-    allowNull: false
+  estado: {
+    type: Sequelize.STRING, // 'completada', 'incompleta'
+    allowNull: true
+  },
+  intensidad_antes: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  intensidad_despues: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  id_emocion_relacionada: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   },
   createdAt: {
     type: Sequelize.DATE,
@@ -49,9 +64,6 @@ const Practica = sequelize.define("practicas", {
     allowNull: true
   }
 });
-
-
-Practica.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 Practica.sync()
   .then(() => console.log("Practica model initialized"))

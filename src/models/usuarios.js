@@ -20,6 +20,22 @@ const Usuario = sequelize.define("usuarios", {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  genero: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  carrera: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  ciclo: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  consentimiento: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   fecha_registro: {
     type: Sequelize.DATE,
     allowNull: true
@@ -34,7 +50,7 @@ const Usuario = sequelize.define("usuarios", {
   }
 });
 
-Usuario.sync()
+Usuario.sync({ alter: true })
   .then(() => console.log("Usuario model initialized"))
   .catch(err => console.error("Error initializing Usuario model: ", err));
 

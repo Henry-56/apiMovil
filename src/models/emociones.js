@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/config');
-const { Usuario } = require('./usuarios');
 
 const Emocion = sequelize.define("emociones", {
   id_emocion: {
@@ -13,16 +12,36 @@ const Emocion = sequelize.define("emociones", {
     allowNull: false
   },
   fecha: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
   },
   emocion: {
     type: Sequelize.STRING,
     allowNull: false
   },
+  intensidad: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 1,
+      max: 5
+    }
+  },
+  contexto: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  momento_dia: {
+    type: Sequelize.STRING, // 'manana', 'tarde', 'noche'
+    allowNull: true
+  },
   reflexion: {
     type: Sequelize.TEXT,
     allowNull: true
+  },
+  fuente_registro: {
+    type: Sequelize.STRING, // 'manual', 'post_practica'
+    defaultValue: 'manual'
   },
   createdAt: {
     type: Sequelize.DATE,
@@ -33,8 +52,6 @@ const Emocion = sequelize.define("emociones", {
     allowNull: true
   }
 });
-
-Emocion.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 Emocion.sync()
   .then(() => console.log("Emocion model initialized"))
