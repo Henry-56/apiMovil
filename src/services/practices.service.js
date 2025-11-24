@@ -7,9 +7,7 @@ const getLibrary = async () => {
     // Or we just return all unique practices available in the system if we don't have a separate "Library" table.
     // Requirement says: "catálogo de prácticas disponibles... a partir de la tabla practicas o una tabla de recursos maestros."
     // Let's assume we query practices where id_usuario is NULL (system practices).
-    const practices = await Practica.findAll({
-        where: { id_usuario: null }
-    });
+    const practices = await Practica.findAll();
     return practices;
 };
 
